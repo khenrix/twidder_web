@@ -2,13 +2,51 @@ body{
     background-color: cornflowerblue;
 }
 
+/* Classes */
+.text-center
+{
+    text-align: center;
+}
+
+.input-field
+{
+    padding-bottom: 5px;
+    padding-left: 7px;
+}
+
+.extend-select
+{
+    width: 130px;
+}
+
+.pull-right
+{
+    float: right;
+    padding-right: 10px;
+}
+
+/* Identifiers */
 #container
 {
     height: 400px;
     width: 600px;
     padding-top: 100px;
-    margin-left: auto ;
-    margin-right: auto ;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#logo_div
+{
+    border-style: solid;
+    border-width: 1px;
+    height: 400px;
+    width: 340px;
+    float: left;
+}
+
+#user_container
+{
+    float: right;
 }
 
 #login_div
@@ -16,24 +54,9 @@ body{
     border-style: solid;
     border-width: 1px;
     height: 100px;
+    width: 250px;
     background-color: white;
     margin-bottom: 8px;
-}
-
-.text-center
-{
-    text-align: center;
-}
-
-.input-align
-{
-    float: right;
-    margin-right: 10px;
-}
-
-#user_container
-{
-    float: right;
 }
 
 #reg_div
@@ -45,11 +68,10 @@ body{
     background-color: white;
 }
 
-#logo_div
+/* Rest */
+label
 {
-    border-style: solid;
-    border-width: 1px;
-    height: auto;
-    width: 340px;
-    float: left;
-}
+  display: inline-block;
+  width: 100px;
+  text-align: left;
+}​
