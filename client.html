@@ -5,5 +5,76 @@
     <script src="serverstub.js" type="text/javascript"></script>
 </head>
 <body>
+
+<!-- Welcome View -->
+<script id="welcome_view" type="text/view">
+    <div id="container">
+        <div id="logo_div">
+            <img src="wimage.png">
+        </div>
+        <div id="user_container">
+            <div id="login_div">
+                <h3></h3>
+                <div class="input-field">
+                    <label for="email">Email</label>
+                    <input id="email" type="text" name="email" value="">
+                </div>
+                <div class="input-field">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="psw">
+                </div>
+                <div class="pull-right">
+                    <input type="submit" value="Login">
+                </div>
+            </div>
+            <div id="reg_div">
+                <h3 class="text-center">Sign up here</h3>
+                <div class="input-field">
+                    <label class="" for="first_name">First name</label>
+                    <input id="first_name" type="text" name="first_name" value="">
+                </div>
+                <div class="input-field">
+                    <label for="family_name">Family name</label>
+                    <input id="family_name" type="text" name="family_name" value="">
+                </div>
+                <div class="input-field">
+                    <label for="gender">Gender</label>
+                    <select class="extend-select" id="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="city">City</label>
+                    <input id="city" type="text" name="city" value="">
+                </div>
+                <div class="input-field">
+                    <label for="country">Country</label>
+                    <input id="country" type="text" name="country" value="">
+                </div>
+                <div class="input-field">
+                    <label for="email_reg">Email</label>
+                    <input id="email_reg" type="text" name="email_reg" value="">
+                </div>
+                <div class="input-field">
+                    <label for="psw_reg">Password</label>
+                    <input id="psw_reg"type="password" name="psw_reg" value="">
+                </div>
+                <div class="input-field">
+                    <label for="psw_reg_rep">Repeat PSW</label>
+                    <input id="psw_reg_rep" type="password" name="psw_reg_rep" value="">
+                </div>
+                <div class="pull-right">
+                    <input type="submit" value="Sign Up">
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- Profile View -->
+<script id="profile_view" type="text/view">
+
+</script>
 </body>
 </html>
