@@ -142,9 +142,9 @@ showMessages = function(){
 
     var output = "";
     for(var i = 0; i < messages.length; i++){
-        output += output + "<hr> <p>" + messages[i].content + "</p>";
+        output += "<hr> <p>" + messages[i].content + "</p>";
     }
     console.log(output);
-    document.getElementById("personal-wall").innerHTML = output;
 
+    document.getElementById("personal-wall").innerHTML = output;
 };
