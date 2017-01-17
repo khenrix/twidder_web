@@ -78,7 +78,83 @@
 
 <!-- Profile View -->
 <script id="profile_view" type="text/view">
-
+    <div id="container">
+        <h2 class=text-center>Welcome to Twidder</h2>
+            <ul class="tab">
+              <li><a>Home</a></li>
+              <li><a>Browse</a></li>
+              <li><a>Account</a></li>
+            </ul>
+            <div class="home-content text-center">
+                <div id="personal-content">
+                    <h3>Personal content</h3>
+                    <div class="input-field">
+                        <label for="first_name">First name</label>
+                        <input id="first_name" type="text" name="first_name" value="" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="family_name">Family name</label>
+                        <input id="family_name" type="text" name="family_name" value="" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="gender">Gender</label>
+                        <select class="extend-select" id="gender" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label for="city">City</label>
+                        <input id="city" type="text" name="city" value="" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="country">Country</label>
+                        <input id="country" type="text" name="country" value="" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="email_reg">Email</label>
+                        <input id="email_reg" type="email" name="email_reg" value="" required>
+                    </div>
+                    <hr>
+                </div>
+                <div id="post-wall">
+                    <h3>Post something on your wall</h3>
+                    <div class="input-field">
+                        <textarea rows="4" cols="50"></textarea>
+                    </div>
+                    <input type="submit" value="Post" onclick="">
+                    <hr>
+                </div>
+                <div id="wall">
+                    <h3>Your personal wall</h3>
+                    <div id="personal-wall"><div>
+                    <input type="submit" value="Refresh" onclick="">
+                </div>
+            </div>
+            <div class="browse-content">Testing</div>
+            <div class="account-content text-center">
+                    <h3>Change password</h3>
+                    <div class="input-field">
+                        <label for="email_reg">Email</label>
+                        <input id="email_reg" type="email" name="email_reg" value="" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="psw_reg">Password</label>
+                        <input id="psw_reg"type="password" name="psw_reg" value="" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="psw_reg_rep">Repeat PSW</label>
+                        <input id="psw_reg_rep" type="password" name="psw_reg_rep" value="" required>
+                    </div>
+                    <div class="">
+                        <input type="submit" value="Confirm" onclick="changePassword()">
+                    </div>
+                    <hr>
+                    <di">
+                        <button class="button btn-sign-out">Sign out</button>
+                    </div>
+            </div>
+    </div>
 </script>
 </body>
 </html>

@@ -2,7 +2,7 @@ body{
     background-color: cornflowerblue;
 }
 
-/* Classes */
+/* Misc */
 .text-center
 {
     text-align: center;
@@ -25,7 +25,22 @@ body{
     padding-right: 10px;
 }
 
-/* Identifiers */
+.button {
+    background-color: maroon;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.btn-sign-out
+{
+    font-size: 16px;
+}
+
 #container
 {
     height: 400px;
@@ -35,6 +50,7 @@ body{
     margin-right: auto;
 }
 
+/* Welcome View */
 #logo_div
 {
     border-style: solid;
@@ -67,6 +83,64 @@ body{
     width: 250px;
     background-color: white;
 }
+
+
+/* Profile View */
+
+/* Tabs */
+ul.tab
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid black;
+    background-color: maroon;
+}
+
+ul.tab li
+{
+    float: left;
+}
+
+ul.tab li a
+{
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.home-content
+{
+    background-color: white;
+    margin-top: 10px;
+    padding-top: 2px;
+    padding-bottom: 20px;
+    margin-bottom: 300px;
+    border: 1px solid black;
+}
+
+.browse-content
+{
+    display: none;
+    background-color: white;
+    margin-top: 10px;
+    border: 1px solid black;
+}
+
+.account-content
+{
+    display: none;
+    background-color: white;
+    margin-top: 10px;
+    height: 230px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border: 1px solid black;
+}
+
 
 /* Rest */
 label
