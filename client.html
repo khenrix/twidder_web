@@ -127,11 +127,26 @@
                 </div>
                 <div id="wall">
                     <h3>Your personal wall</h3>
-                    <div id="personal-wall"><div>
+                    <div id="personal-wall"></div>
                     <input type="submit" value="Refresh" onclick="">
                 </div>
             </div>
-            <div class="browse-content">Testing</div>
+            <div class="browse-content text-center">
+                <div id="browse-user">
+                    <h3>Search for a friend</h3>
+                    <div class="input-field">
+                        <label for="email_search">Email</label>
+                        <input id="email_search" type="email" name="email_search" value="" required>
+                    </div>
+                    <div class="">
+                        <input type="submit" value="Search" onclick="">
+                    </div>
+                    <hr>
+                    <div id="friend-content">
+                        <h3>Content of friend</h3>
+                    </div>
+                </div>
+            </div>
             <div class="account-content text-center">
                     <h3>Change password</h3>
                     <div class="input-field">
@@ -150,8 +165,8 @@
                         <input type="submit" value="Confirm" onclick="changePassword()">
                     </div>
                     <hr>
-                    <di">
-                        <button class="button btn-sign-out">Sign out</button>
+                    <div>
+                        <button class="button btn-sign-out" onclick="signOut()">Sign out</button>
                     </div>
             </div>
     </div>

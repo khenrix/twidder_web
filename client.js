@@ -1,10 +1,13 @@
-displayView = function(view){
+displayView = function(){
     // the code required to display a view
     if (localStorage.getItem("token") != null) {
+        console.log("Showing profile view");
         var profile_view = document.getElementById("profile_view");
         document.getElementById("content").innerHTML = profile_view.innerHTML;
-    }else {
-        document.getElementById("content").innerHTML = view.innerHTML;
+    }else{
+        console.log("Showing welcome view");
+        var welcome_view = document.getElementById("welcome_view");
+        document.getElementById("content").innerHTML = welcome_view.innerHTML;
     }
 };
 
@@ -12,8 +15,7 @@ window.onload = function(){
     //code that is executed as the page is loaded.
     //You shall put your own custom code here.
     //window.alert() is not allowed to be used in your implementation.
-    var welcome_view = document.getElementById("welcome_view");
-    displayView(welcome_view);
+    displayView();
 };
 
 checkPassword = function(given_pw, given_pw_rep){
@@ -51,7 +53,6 @@ signUpHandler = function(){
 
     if (response.success){
         window.alert("Welcome to Twidder!");
-        //displayView("profile_view");
     }else{
         window.alert(response.message);
     }
@@ -67,10 +68,17 @@ signInHandler = function(){
     if (response.success){
         console.log("Login success");
         var profile_view = document.getElementById("profile_view");
-        displayView("profile_view");
         localStorage.setItem("token", response.data);
-        console.log(localStorage.getItem("token"));
+        window.displayView();
     }else{
         console.log("Login failed.")
     }
+};
+
+signOut = function(){
+    var token = localStorage.getItem("token");
+    var response = serverstub.signOut(token);
+
+    localStorage.removeItem("token");
+    window.displayView();
 };
