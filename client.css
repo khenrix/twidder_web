@@ -114,18 +114,15 @@ ul.tab li a
 
 .home-content
 {
-    display: none;
     background-color: white;
     margin-top: 10px;
     padding-top: 2px;
     padding-bottom: 20px;
-    margin-bottom: 300px;
     border: 1px solid black;
 }
 
 .browse-content
 {
-    display: none;
     background-color: white;
     margin-top: 10px;
     border: 1px solid black;
