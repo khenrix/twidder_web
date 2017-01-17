@@ -126,15 +126,15 @@
                 <div id="post-wall">
                     <h3>Post something on your wall</h3>
                     <div class="input-field">
-                        <textarea rows="4" cols="50"></textarea>
+                        <textarea id="pm" rows="4" cols="50"></textarea>
                     </div>
-                    <input type="submit" value="Post" onclick="">
+                    <input type="submit" value="Post" onclick="postMessage()">
                     <hr>
                 </div>
                 <div id="wall">
                     <h3>Your personal wall</h3>
                     <div id="personal-wall"></div>
-                    <input type="submit" value="Refresh" onclick="">
+                    <input type="submit" value="Refresh" onclick="showMessages()">
                 </div>
             </div>
             <div class="browse-content text-center">

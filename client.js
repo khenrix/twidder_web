@@ -25,7 +25,7 @@ checkPassword = function(given_pw, given_pw_rep){
     if (given_pw === given_pw_rep && given_pw_length > pw_length){
         return true;
     }else{
-        showMessage("Given passwords must be the same and longer than 5 characters!");
+        showSysMessage("Given passwords must be the same and longer than 5 characters!");
         return false;
     }
 };
@@ -39,7 +39,7 @@ changePassword = function(){
     if (checkPassword(new_password, new_password_rep)){
         var token = localStorage.getItem("token");
         var response = serverstub.changePassword(token, old_password, new_password);
-        showMessage(response.message);
+        showSysMessage(response.message);
         console.log(response.message);
     }
 };
@@ -89,7 +89,7 @@ signUpHandler = function(){
         console.log("Sign up unsuccessful!");
     }
 
-    showMessage(response.message);
+    showSysMessage(response.message);
 };
 
 signInHandler = function(){
@@ -102,11 +102,11 @@ signInHandler = function(){
         console.log("Login success");
         var profile_view = document.getElementById("profile_view");
         localStorage.setItem("token", response.data);
-        showMessage(response.message);
+        showSysMessage(response.message);
         window.displayView();
     }else{
         console.log("Login failed.");
-        showMessage(response.message);
+        showSysMessage(response.message);
     }
 };
 
@@ -118,7 +118,33 @@ signOut = function(){
     window.displayView();
 };
 
-showMessage = function(msg){
+showSysMessage = function(msg){
     document.getElementById("error-message").innerHTML = msg;
     document.getElementById("alert-container").style.display = "block";
+};
+
+postMessage = function(){
+
+    var msg = document.getElementById("pm").value;
+    var token = localStorage.getItem("token");
+    var data = getUserData();
+    var email = data.email;
+
+    console.log("Posting wall message.");
+    var response = serverstub.postMessage(token, msg, email);
+    console.log(response.message);
+};
+
+showMessages = function(){
+
+    var token = localStorage.getItem("token");
+    var messages = serverstub.getUserMessagesByToken(token).data;
+
+    var output = "";
+    for(var i = 0; i < messages.length; i++){
+        output += output + "<hr> <p>" + messages[i].content + "</p>";
+    }
+    console.log(output);
+    document.getElementById("personal-wall").innerHTML = output;
+
 };
