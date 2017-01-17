@@ -9,6 +9,10 @@
 <!-- Welcome View -->
 <script id="welcome_view" type="text/view">
     <div id="container">
+         <div id="alert-container" class="alert">
+            <span class="cross-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <p id="error-message"></p>
+        </div>
         <div id="logo_div">
             <img src="wimage.png">
         </div>
@@ -74,11 +78,16 @@
             </div>
         </div>
     </div>
+
 </script>
 
 <!-- Profile View -->
 <script id="profile_view" type="text/view">
     <div id="container">
+         <div id="alert-container" class="alert">
+            <span class="cross-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <p id="error-message"></p>
+        </div>
         <h2 class=text-center>Welcome to Twidder</h2>
             <ul class="tab">
               <li><a>Home</a></li>
@@ -170,6 +179,7 @@
                     </div>
             </div>
     </div>
+
 </script>
 </body>
 </html>

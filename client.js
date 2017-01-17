@@ -25,7 +25,7 @@ checkPassword = function(given_pw, given_pw_rep){
     if (given_pw === given_pw_rep && given_pw_length > pw_length){
         return true;
     }else{
-        window.alert("Given passwords must be the same and longer than 5 characters!")
+        showMessage("Given passwords must be the same and longer than 5 characters!");
         return false;
     }
 };
@@ -39,6 +39,7 @@ changePassword = function(){
     if (checkPassword(new_password, new_password_rep)){
         var token = localStorage.getItem("token");
         var response = serverstub.changePassword(token, old_password, new_password);
+        showMessage(response.message);
         console.log(response.message);
     }
 };
@@ -55,7 +56,7 @@ signUpHandler = function(){
     var pw_reg_rep = document.getElementById("psw_reg_rep").value;
 
     if (!checkPassword(pw_reg, pw_reg_rep)){
-        return false;
+        return;
     }
 
     var signUpObject = {email:email, password:pw_reg,
@@ -69,6 +70,8 @@ signUpHandler = function(){
     }else{
         console.log("Sign up unsuccessful!");
     }
+
+    showMessage(response.message);
 };
 
 signInHandler = function(){
@@ -81,9 +84,11 @@ signInHandler = function(){
         console.log("Login success");
         var profile_view = document.getElementById("profile_view");
         localStorage.setItem("token", response.data);
+        showMessage(response.message);
         window.displayView();
     }else{
-        console.log("Login failed.")
+        console.log("Login failed.");
+        showMessage(response.message);
     }
 };
 
@@ -93,4 +98,9 @@ signOut = function(){
 
     localStorage.removeItem("token");
     window.displayView();
+};
+
+showMessage = function(msg){
+    document.getElementById("error-message").innerHTML = msg;
+    document.getElementById("alert-container").style.display = "block";
 };

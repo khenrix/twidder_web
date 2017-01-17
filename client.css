@@ -139,6 +139,23 @@ ul.tab li a
     border: 1px solid black;
 }
 
+.alert {
+    display: none;
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+}
+
+.cross-btn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
 /* Rest */
 label
 {
