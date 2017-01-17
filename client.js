@@ -30,6 +30,19 @@ checkPassword = function(given_pw, given_pw_rep){
     }
 };
 
+changePassword = function(){
+
+    var old_password = document.getElementById("psw_old").value;
+    var new_password = document.getElementById("psw_new").value;
+    var new_password_rep = document.getElementById("psw_new_rep").value;
+
+    if (checkPassword(new_password, new_password_rep)){
+        var token = localStorage.getItem("token");
+        var response = serverstub.changePassword(token, old_password, new_password);
+        console.log(response.message);
+    }
+};
+
 signUpHandler = function(){
 
     var first_name = document.getElementById("first_name").value;
@@ -52,9 +65,9 @@ signUpHandler = function(){
     var response = serverstub.signUp(signUpObject);
 
     if (response.success){
-        window.alert("Welcome to Twidder!");
+        console.log("Sign up successful!");
     }else{
-        window.alert(response.message);
+        console.log("Sign up unsuccessful!");
     }
 };
 
@@ -62,7 +75,6 @@ signInHandler = function(){
 
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-
     var response = serverstub.signIn(email, password);
 
     if (response.success){
