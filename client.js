@@ -50,6 +50,8 @@ getUserData = function(){
     return serverstub.getUserDataByToken(token).data;
 };
 
+
+
 setUserContent = function(){
 
     data = getUserData();
@@ -78,8 +80,8 @@ signUpHandler = function(){
     }
 
     var signUpObject = {email:email, password:pw_reg,
-                        firstname:first_name, familyname:family_name,
-                        gender:gender, city:city, country:country};
+        firstname:first_name, familyname:family_name,
+        gender:gender, city:city, country:country};
 
     var response = serverstub.signUp(signUpObject);
 
@@ -148,3 +150,41 @@ showMessages = function(){
 
     document.getElementById("personal-wall").innerHTML = output;
 };
+
+getFriend = function () {
+    var token = localStorage.getItem("token");
+    var email = document.getElementById("email_search").value;
+    var response = serverstub.getUserDataByEmail(token, email);
+
+    console.log(response);
+    console.log(response.data);
+
+    if(response.success){
+        console.log("Här fan");
+        var messages = serverstub.getUserMessagesByEmail(token, email).data;
+        var userdata = response.data;
+        var titles = ["First name","Family name","Gender","City","Country","Email"];
+        var output = "";
+
+        console.log(userdata.length);
+
+        for(var k = 0; k < 6; k++){
+            output += titles[k] + ": " + userdata[k].content;
+            console.log(userdata[k]);
+        }
+        output += "<hr>";
+        for(var i = 0; i < messages.length; i++){
+            output += "<hr> <p>" + messages[i].content + "</p>";
+        }
+        console.log(output);
+        document.getElementById("friend-content").innerHTML = output;
+    }
+    else{
+        showSysMessage(response.message);
+    }
+
+};
+
+
+
+
