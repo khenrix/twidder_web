@@ -1,6 +1,11 @@
 displayView = function(view){
     // the code required to display a view
-    document.getElementById("content").innerHTML = view.innerHTML;
+    if (localStorage.getItem("token") != null) {
+        var profile_view = document.getElementById("profile_view");
+        document.getElementById("content").innerHTML = profile_view.innerHTML;
+    }else {
+        document.getElementById("content").innerHTML = view.innerHTML;
+    }
 };
 
 window.onload = function(){
@@ -14,7 +19,6 @@ window.onload = function(){
 checkPassword = function(given_pw, given_pw_rep){
     var pw_length = 5;
     given_pw_length = given_pw.length;
-    console.log(given_pw_length);
 
     if (given_pw === given_pw_rep && given_pw_length > pw_length){
         return true;
@@ -39,15 +43,34 @@ signUpHandler = function(){
         return false;
     }
 
-    var dataObject = {email:email, password:pw_reg, firstname:first_name, familyname:family_name,
-                      gender:gender, city:city, country:country};
+    var signUpObject = {email:email, password:pw_reg,
+                        firstname:first_name, familyname:family_name,
+                        gender:gender, city:city, country:country};
 
-    var response = serverstub.signUp(dataObject);
+    var response = serverstub.signUp(signUpObject);
 
     if (response.success){
         window.alert("Welcome to Twidder!");
         //displayView("profile_view");
     }else{
         window.alert(response.message);
+    }
+};
+
+signInHandler = function(){
+
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+
+    var response = serverstub.signIn(email, password);
+
+    if (response.success){
+        console.log("Login success");
+        var profile_view = document.getElementById("profile_view");
+        displayView("profile_view");
+        localStorage.setItem("token", response.data);
+        console.log(localStorage.getItem("token"));
+    }else{
+        console.log("Login failed.")
     }
 };
