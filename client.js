@@ -56,12 +56,12 @@ setUserContent = function(){
 
     data = getUserData();
 
-    document.getElementById("first_name").innerHTML = data.firstname;
-    document.getElementById("family_name").innerHTML = data.familyname;
-    document.getElementById("gender").innerHTML = data.gender;
-    document.getElementById("city").innerHTML = data.city;
-    document.getElementById("country").innerHTML = data.country;
-    document.getElementById("email").innerHTML = data.email;
+    document.getElementById("first_name").innerHTML = "First name: " + data.firstname;
+    document.getElementById("family_name").innerHTML = "Family name: " + data.familyname;
+    document.getElementById("gender").innerHTML = "Gender: " + data.gender;
+    document.getElementById("city").innerHTML = "City: " + data.city;
+    document.getElementById("country").innerHTML = "Country: " + data.country;
+    document.getElementById("email").innerHTML = "Email: " + data.email;
 };
 
 signUpHandler = function(){
