@@ -123,6 +123,7 @@ ul.tab li a
 
 .browse-content
 {
+    display: none;
     background-color: white;
     margin-top: 10px;
     border: 1px solid black;
@@ -131,6 +132,7 @@ ul.tab li a
 
 .account-content
 {
+    display: none;
     background-color: white;
     margin-top: 10px;
     height: 230px;

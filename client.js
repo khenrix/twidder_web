@@ -181,7 +181,7 @@ browseFriend = function(){
 
         // Show messages
         var messages = serverstub.getUserMessagesByEmail(token, email).data;
-        console.log(messages)
+        console.log(messages);
         var output = "";
         for( var i = 0; i < messages.length; i++){
             output += "<hr><p>" + messages[i].content + "</p>";
@@ -192,6 +192,24 @@ browseFriend = function(){
     }
 };
 
-
-
-
+openTab = function(tab){
+    switch(tab) {
+        case "Home":
+            document.getElementById("home-content").style.display = "block";
+            document.getElementById("browse-content").style.display = "none";
+            document.getElementById("account-content").style.display = "none";
+            break;
+        case "Browse":
+            document.getElementById("home-content").style.display = "none";
+            document.getElementById("browse-content").style.display = "block";
+            document.getElementById("account-content").style.display = "none";
+            break;
+        case "Account":
+            document.getElementById("home-content").style.display = "none";
+            document.getElementById("browse-content").style.display = "none";
+            document.getElementById("account-content").style.display = "block";
+            break;
+        default:
+            break;
+    }
+};
