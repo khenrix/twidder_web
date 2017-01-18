@@ -96,24 +96,18 @@
               <li><a>Account</a></li>
             </ul>
             <div class="home-content text-center">
+                <h3>Personal content</h3>
                 <div id="personal-content">
-                    <h3>Personal content</h3>
-                    <p id="first_name"></p>
-                    <p id="family_name"></p>
-                    <p id="gender"></p>
-                    <p id="city"></p>
-                    <p id="country"></p>
-                    <p id="email"></p>
-                    <hr>
                 </div>
+                <hr>
                 <div id="post-wall">
                     <h3>Post something on your wall</h3>
                     <div class="input-field">
                         <textarea id="pm" rows="4" cols="50"></textarea>
                     </div>
-                    <input type="submit" value="Post" onclick="postMessage()">
-                    <hr>
+                    <input type="submit" value="Post" onclick="postOnOwnWall()">
                 </div>
+                <hr>
                 <div id="wall">
                     <h3>Your personal wall</h3>
                     <div id="personal-wall"></div>
@@ -128,11 +122,25 @@
                         <input id="email_search" type="email" name="email_search" value="" required>
                     </div>
                     <div class="">
-                        <input type="submit" value="Search" onclick="getFriend()">
+                        <input type="submit" value="Search" onclick="browseFriend()">
                     </div>
                     <hr>
                     <div id="friend-content">
                         <h3>Content of friend</h3>
+                        <div id="friend-personal-content">
+                        </div>
+                        <hr>
+                        <h3>Post something on your friends wall</h3>
+                        <div id="friend-post-wall">
+                            <div class="input-field">
+                                <textarea id="friend_pm" rows="4" cols="50"></textarea>
+                            </div>
+                            <input type="submit" value="Post" onclick="postOnFriendsWall()">
+                        </div>
+                        <hr>
+                        <h3>Your friends wall</h3>
+                        <div id="friend-wall"></div>
+                        <input type="submit" value="Refresh" onclick="browseFriend()">
                     </div>
                 </div>
             </div>
@@ -159,8 +167,6 @@
                     </div>
             </div>
     </div>
-
-
 </script>
 </body>
 </html>

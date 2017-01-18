@@ -51,17 +51,16 @@ getUserData = function(){
 };
 
 
-
 setUserContent = function(){
 
     data = getUserData();
 
-    document.getElementById("first_name").innerHTML = "First name: " + data.firstname;
-    document.getElementById("family_name").innerHTML = "Family name: " + data.familyname;
-    document.getElementById("gender").innerHTML = "Gender: " + data.gender;
-    document.getElementById("city").innerHTML = "City: " + data.city;
-    document.getElementById("country").innerHTML = "Country: " + data.country;
-    document.getElementById("email").innerHTML = "Email: " + data.email;
+    document.getElementById("personal-content").innerHTML = "First name: " + data.firstname + "<br>";
+    document.getElementById("personal-content").innerHTML += "Family name: " + data.familyname + "<br>";
+    document.getElementById("personal-content").innerHTML += "Gender: " + data.gender + "<br>";
+    document.getElementById("personal-content").innerHTML += "City: " + data.city + "<br>";
+    document.getElementById("personal-content").innerHTML += "Country: " + data.country + "<br>";
+    document.getElementById("personal-content").innerHTML += "Email: " + data.email + "<br>";
 };
 
 signUpHandler = function(){
@@ -125,16 +124,27 @@ showSysMessage = function(msg){
     document.getElementById("alert-container").style.display = "block";
 };
 
-postMessage = function(){
-
-    var msg = document.getElementById("pm").value;
+postMessage = function(msg, email){
     var token = localStorage.getItem("token");
-    var data = getUserData();
-    var email = data.email;
 
     console.log("Posting wall message.");
     var response = serverstub.postMessage(token, msg, email);
     console.log(response.message);
+};
+
+postOnOwnWall = function(){
+    var data = getUserData();
+    var email = data.email;
+    var msg = document.getElementById("pm").value;
+
+    postMessage(msg, email);
+};
+
+postOnFriendsWall = function(){
+    var email = document.getElementById("email_search").value;
+    var msg = document.getElementById("friend_pm").value;
+
+    postMessage(msg, email);
 };
 
 showMessages = function(){
@@ -144,45 +154,42 @@ showMessages = function(){
 
     var output = "";
     for(var i = 0; i < messages.length; i++){
-        output += "<hr> <p>" + messages[i].content + "</p>";
+        output += "<hr><p>" + messages[i].content + "</p>";
     }
     console.log(output);
 
     document.getElementById("personal-wall").innerHTML = output;
 };
 
-getFriend = function () {
+browseFriend = function(){
     var token = localStorage.getItem("token");
     var email = document.getElementById("email_search").value;
     var response = serverstub.getUserDataByEmail(token, email);
-
     console.log(response);
-    console.log(response.data);
 
-    if(response.success){
-        console.log("Här fan");
+    if (response.success){
+        console.log("Friend found!");
+
+        // Show personal content
+        var data = response.data;
+        document.getElementById("friend-personal-content").innerHTML = "First name: " + data.firstname + "<br>";
+        document.getElementById("friend-personal-content").innerHTML += "Family name: " + data.familyname + "<br>";
+        document.getElementById("friend-personal-content").innerHTML += "Gender: " + data.gender + "<br>";
+        document.getElementById("friend-personal-content").innerHTML += "City: " + data.city + "<br>";
+        document.getElementById("friend-personal-content").innerHTML += "Country: " + data.country + "<br>";
+        document.getElementById("friend-personal-content").innerHTML += "Email: " + data.email + "<br>";
+
+        // Show messages
         var messages = serverstub.getUserMessagesByEmail(token, email).data;
-        var userdata = response.data;
-        var titles = ["First name","Family name","Gender","City","Country","Email"];
+        console.log(messages)
         var output = "";
-
-        console.log(userdata.length);
-
-        for(var k = 0; k < 6; k++){
-            output += titles[k] + ": " + userdata[k].content;
-            console.log(userdata[k]);
+        for( var i = 0; i < messages.length; i++){
+            output += "<hr><p>" + messages[i].content + "</p>";
         }
-        output += "<hr>";
-        for(var i = 0; i < messages.length; i++){
-            output += "<hr> <p>" + messages[i].content + "</p>";
-        }
-        console.log(output);
-        document.getElementById("friend-content").innerHTML = output;
-    }
-    else{
+        document.getElementById("friend-wall").innerHTML = output;
+    }else{
         showSysMessage(response.message);
     }
-
 };
 
 
