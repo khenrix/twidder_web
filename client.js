@@ -16,6 +16,7 @@ window.onload = function(){
     //You shall put your own custom code here.
     //window.alert() is not allowed to be used in your implementation.
     displayView();
+    openTab(localStorage.getItem("tab"));
 };
 
 checkPassword = function(given_pw, given_pw_rep){
@@ -193,6 +194,7 @@ browseFriend = function(){
 };
 
 openTab = function(tab){
+    localStorage.setItem("tab", tab);
     switch(tab) {
         case "Home":
             document.getElementById("home-content").style.display = "block";
