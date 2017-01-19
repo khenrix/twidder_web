@@ -19,6 +19,7 @@ window.onload = function(){
     openTab(localStorage.getItem("tab"));
 };
 
+// Function for checking if the new password is appropriate
 checkPassword = function(given_pw, given_pw_rep){
     var pw_length = 5;
     given_pw_length = given_pw.length;
@@ -31,6 +32,7 @@ checkPassword = function(given_pw, given_pw_rep){
     }
 };
 
+// Function for changing the password
 changePassword = function(){
 
     var old_password = document.getElementById("psw_old").value;
@@ -45,13 +47,14 @@ changePassword = function(){
     }
 };
 
+// Retrieves user data
 getUserData = function(){
 
     var token = localStorage.getItem("token");
     return serverstub.getUserDataByToken(token).data;
 };
 
-
+// Shows user content under Home
 setUserContent = function(){
 
     data = getUserData();
@@ -64,6 +67,7 @@ setUserContent = function(){
     document.getElementById("personal-content").innerHTML += "Email: " + data.email + "<br>";
 };
 
+// Function for handling sign ups
 signUpHandler = function(){
 
     var first_name = document.getElementById("first_name").value;
@@ -94,6 +98,7 @@ signUpHandler = function(){
     showSysMessage(response.message);
 };
 
+// Function for handling sign ins
 signInHandler = function(){
 
     var email = document.getElementById("email").value;
@@ -112,19 +117,20 @@ signInHandler = function(){
     }
 };
 
+// Function for signing out
 signOut = function(){
     var token = localStorage.getItem("token");
     var response = serverstub.signOut(token);
-
     localStorage.removeItem("token");
-    window.displayView();
 };
 
+// Function for showing messages from the system
 showSysMessage = function(msg){
     document.getElementById("error-message").innerHTML = msg;
     document.getElementById("alert-container").style.display = "block";
 };
 
+// Function for posting messages
 postMessage = function(msg, email){
     var token = localStorage.getItem("token");
 
@@ -133,6 +139,7 @@ postMessage = function(msg, email){
     console.log(response.message);
 };
 
+// Post on own wall
 postOnOwnWall = function(){
     var data = getUserData();
     var email = data.email;
@@ -141,6 +148,7 @@ postOnOwnWall = function(){
     postMessage(msg, email);
 };
 
+// Post on friends wall
 postOnFriendsWall = function(){
     var email = document.getElementById("email_search").value;
     var msg = document.getElementById("friend_pm").value;
@@ -148,8 +156,8 @@ postOnFriendsWall = function(){
     postMessage(msg, email);
 };
 
+// Show personal wall messages
 showMessages = function(){
-
     var token = localStorage.getItem("token");
     var messages = serverstub.getUserMessagesByToken(token).data;
 
@@ -162,6 +170,7 @@ showMessages = function(){
     document.getElementById("personal-wall").innerHTML = output;
 };
 
+// Browse friend
 browseFriend = function(){
     var token = localStorage.getItem("token");
     var email = document.getElementById("email_search").value;
@@ -193,6 +202,7 @@ browseFriend = function(){
     }
 };
 
+// Display correct tab
 openTab = function(tab){
     localStorage.setItem("tab", tab);
     switch(tab) {
@@ -200,6 +210,7 @@ openTab = function(tab){
             document.getElementById("home-content").style.display = "block";
             document.getElementById("browse-content").style.display = "none";
             document.getElementById("account-content").style.display = "none";
+            setUserContent();
             break;
         case "Browse":
             document.getElementById("home-content").style.display = "none";

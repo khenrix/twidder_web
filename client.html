@@ -19,7 +19,7 @@
         <div id="user_container">
             <div id="login_div">
                 <h3></h3>
-                 <form>
+                 <form onsubmit="signInHandler()">
                     <div class="input-field">
                         <label for="email">Email</label>
                         <input id="email" type="email" name="email" value="" required>
@@ -29,12 +29,12 @@
                         <input id="password" type="password" name="psw" required>
                     </div>
                     <div class="pull-right">
-                        <input type="submit" value="Login" onclick="signInHandler()">
+                        <input type="submit" value="Login">
                     </div>
                 </form>
             </div>
             <div id="reg_div">
-                <form>
+                <form onsubmit="signUpHandler()">
                     <h3 class="text-center">Sign up here</h3>
                     <div class="input-field">
                         <label for="first_name">First name</label>
@@ -72,7 +72,7 @@
                         <input id="psw_reg_rep" type="password" name="psw_reg_rep" value="" required>
                     </div>
                     <div class="pull-right">
-                        <input type="submit" value="Sign Up" onclick="signUpHandler()">
+                        <input type="submit" value="Sign Up">
                     </div>
                 </form>
             </div>

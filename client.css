@@ -116,6 +116,7 @@ ul.tab li a
 {
     background-color: white;
     margin-top: 10px;
+    margin-bottom: 10px;
     padding-top: 2px;
     padding-bottom: 20px;
     border: 1px solid black;
@@ -126,6 +127,7 @@ ul.tab li a
     display: none;
     background-color: white;
     margin-top: 10px;
+    margin-bottom: 10px;
     border: 1px solid black;
     padding-bottom: 10px;
 }
@@ -135,6 +137,7 @@ ul.tab li a
     display: none;
     background-color: white;
     margin-top: 10px;
+    margin-bottom: 10px;
     height: 230px;
     padding-top: 2px;
     padding-bottom: 2px;
