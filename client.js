@@ -4,6 +4,7 @@ displayView = function(){
         console.log("Showing profile view");
         var profile_view = document.getElementById("profile_view");
         document.getElementById("content").innerHTML = profile_view.innerHTML;
+        openTab(localStorage.getItem("tab"));
     }else{
         console.log("Showing welcome view");
         var welcome_view = document.getElementById("welcome_view");
@@ -16,7 +17,6 @@ window.onload = function(){
     //You shall put your own custom code here.
     //window.alert() is not allowed to be used in your implementation.
     displayView();
-    openTab(localStorage.getItem("tab"));
 };
 
 // Function for checking if the new password is appropriate
@@ -80,7 +80,7 @@ signUpHandler = function(){
     var pw_reg_rep = document.getElementById("psw_reg_rep").value;
 
     if (!checkPassword(pw_reg, pw_reg_rep)){
-        return;
+        return false;
     }
 
     var signUpObject = {email:email, password:pw_reg,
@@ -96,6 +96,9 @@ signUpHandler = function(){
     }
 
     showSysMessage(response.message);
+
+    return false;
+
 };
 
 // Function for handling sign ins
@@ -109,12 +112,13 @@ signInHandler = function(){
         console.log("Login success");
         var profile_view = document.getElementById("profile_view");
         localStorage.setItem("token", response.data);
-        showSysMessage(response.message);
-        window.displayView();
+        displayView();
     }else{
         console.log("Login failed.");
         showSysMessage(response.message);
     }
+
+    return false;
 };
 
 // Function for signing out
