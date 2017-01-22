@@ -1,0 +1,28 @@
+/*
+  Unsecure to use email as primary key?
+  Using id.
+ */
+
+drop table if exists users;
+create table users (
+  id integer primary key autoincrement,
+  email text not null,
+  password text not null,
+  firstname text not null,
+  familyname text not null,
+  gender text not null,
+  city text not null,
+  country text not null
+);
+
+/*
+  Add a foreign key?
+  Enough to retrieve messages by iterating through writer/receiver?
+ */
+drop table if exists messages;
+create table messages (
+  id integer primary key autoincrement,
+  content text not null,
+  writer text not null,
+  reciever text not null
+);
