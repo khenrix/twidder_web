@@ -12,7 +12,7 @@ def sign_in():
     token = str(uuid.uuid4())
 
     if helper.valid_login(email, password):
-        # Store logged in users?
+        # TODO: Store logged in users?
         return jsonify({"success": True, "message": "Successfully signed in.", "data": token})
     else:
         return jsonify({"success": False, "message": "Wrong username or password."})
@@ -36,21 +36,25 @@ def sign_up():
 
 
 @app.route('/sign-out', methods='POST')
-def sign_out():
+def sign_out(token):
     # How do we know which people are logged in? Global variable list?
-    if helper.is_signed_in():
-        helper.sign_out()
+    if helper.is_signed_in(token):
+        helper.sign_out(token)
         return jsonify({"success": True, "message": "Successfully signed out."})
     else:
         return jsonify({"success": False, "message": "You are not signed in."})
 
 
 @app.route('/change-password', methods='POST')
-def change_password():
-    # Need to check if user is logged in?
-    if helper.is_signed_in():
-        if helper.valid_password():
-            helper.change_password()
+def change_password(token):
+    old_password = request.form['old_password']
+    new_password = request.form['new_password']
+    email = helper.token_to_email(token)
+    # TODO: Link token to email? validation through SQL or Dictionary
+
+    if helper.is_signed_in(token):
+        if helper.valid_login(email, old_password):
+            helper.change_password(email, new_password)
             return jsonify({"success": True, "message": "Password changed."})
         else:
             return jsonify({"success": False, "message": "Wrong password."})
@@ -66,7 +70,7 @@ def get_user_data_by_token(token):
 
 @app.route('/get-user-data-by-email/<token>/<email>', methods='GET')
 def get_user_data_by_email(token, email):
-    if helper.is_signed_in():
+    if helper.is_signed_in(token):
         if helper.user_exists(email):
             match = helper.get_user_data(email)
             return jsonify({"success": True, "message": "User data retrieved.", "data": match})
@@ -84,7 +88,7 @@ def get_user_messages_by_token(token):
 
 @app.route('/get-user-messages-by-email/<token>/<email>', methods='GET')
 def get_user_messages_by_email(token, email):
-    if helper.is_signed_in():
+    if helper.is_signed_in(token):
         if helper.user_exists(email):
             match = helper.get_user_messages(email)
             return jsonify({"success": True, "message": "User messages retrieved.", "data": match})
@@ -96,8 +100,10 @@ def get_user_messages_by_email(token, email):
 
 @app.route('/post-message/<token>/<email>', methods='POST')
 def post_message(token, message, email):
-    if helper.is_signed_in():
+    writer = helper.token_to_email(token)
+    if helper.is_signed_in(token):
         if helper.user_exists(email):
+            helper.add_message(message, writer, email)
             return jsonify({"success": True, "message": "Message posted"})
         else:
             return jsonify({"success": False, "message": "No such user."})
