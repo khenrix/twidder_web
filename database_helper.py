@@ -36,9 +36,28 @@ def user_exists(email):
 
 
 def add_user(email, password, firstname, familyname, gender, city, country):
-    query_db('insert into users(email, password, firstname, familyname, gender, city, country) '
+    query_db('insert into users(email, password, firstname, familyname, gender, city, country) ' +
              'values(?, ?, ?, ?, ?, ?, ?)',
              [email, password, firstname, familyname, gender, city, country])
+    get_db().commit()
+
+
+def get_user_data(email):
+    return query_db('select * from users where email=?', [email])
+
+
+def add_message(content, writer, receiver):
+    query_db('insert into messages(content, writer, receiver) values(?, ?, ?)',
+             [content, writer,receiver])
+    get_db().commit()
+
+
+def get_user_messages(email):
+    return query_db('select * from messages where receiver=?', [email])
+
+
+def change_password(email, password):
+    query_db('update users set password=? where email=?', [password, email])
     get_db().commit()
 
 
