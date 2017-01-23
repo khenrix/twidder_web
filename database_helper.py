@@ -27,6 +27,21 @@ def query_db(query, args=(), one=False):
     return (rv[0] if rv else None) if one else rv
 
 
+def valid_login(email, password):
+    return query_db('select * from users where email=? and password=?', [email, password])
+
+
+def user_exists(email):
+    return query_db('select * from users where email=?', [email])
+
+
+def add_user(email, password, firstname, familyname, gender, city, country):
+    query_db('insert into users(email, password, firstname, familyname, gender, city, country) '
+             'values(?, ?, ?, ?, ?, ?, ?)',
+             [email, password, firstname, familyname, gender, city, country])
+    get_db().commit()
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
