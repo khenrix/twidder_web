@@ -216,17 +216,26 @@ openTab = function(tab){
             document.getElementById("home-content").style.display = "block";
             document.getElementById("browse-content").style.display = "none";
             document.getElementById("account-content").style.display = "none";
+            document.getElementById("home-tab").style.background = "black";
+            document.getElementById("browse-tab").style.background = "none";
+            document.getElementById("account-tab").style.background = "none";
             setUserContent();
             break;
         case "Browse":
             document.getElementById("home-content").style.display = "none";
             document.getElementById("browse-content").style.display = "block";
             document.getElementById("account-content").style.display = "none";
+            document.getElementById("home-tab").style.background = "none";
+            document.getElementById("browse-tab").style.background = "black";
+            document.getElementById("account-tab").style.background = "none";
             break;
         case "Account":
             document.getElementById("home-content").style.display = "none";
             document.getElementById("browse-content").style.display = "none";
             document.getElementById("account-content").style.display = "block";
+            document.getElementById("home-tab").style.background = "none";
+            document.getElementById("browse-tab").style.background = "none";
+            document.getElementById("account-tab").style.background = "black";
             break;
         default:
             break;
