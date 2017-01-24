@@ -1,11 +1,16 @@
-import database_helper as helper
-import uuid
-
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 
+import database_helper as helper
+import uuid
 
-@app.route('/sign-in', methods='POST')
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+
+@app.route('/sign-in', methods=['POST'])
 def sign_in():
     email = request.form['email']
     password = request.form['password']
@@ -18,7 +23,7 @@ def sign_in():
         return jsonify({"success": False, "message": "Wrong username or password."})
 
 
-@app.route('/sign-up', methods='POST')
+@app.route('/sign-up', methods=['POST'])
 def sign_up():
     email = request.form['email']
     password = request.form['password']
@@ -35,7 +40,7 @@ def sign_up():
         return jsonify({"success": True, "message": "Successfully created a new user."})
 
 
-@app.route('/sign-out', methods='POST')
+@app.route('/sign-out', methods=['POST'])
 def sign_out(token):
     # How do we know which people are logged in? Global variable list?
     if helper.is_signed_in(token):
@@ -45,7 +50,7 @@ def sign_out(token):
         return jsonify({"success": False, "message": "You are not signed in."})
 
 
-@app.route('/change-password', methods='POST')
+@app.route('/change-password', methods=['POST'])
 def change_password(token):
     old_password = request.form['old_password']
     new_password = request.form['new_password']
@@ -62,13 +67,13 @@ def change_password(token):
         return jsonify({"success": False, "message": "You are not logged in."})
 
 
-@app.route('/get-user-data-by-token/<token>', methods='GET')
+@app.route('/get-user-data-by-token/<token>', methods=['GET'])
 def get_user_data_by_token(token):
     email = helper.token_to_email(token)
     get_user_data_by_email(email)
 
 
-@app.route('/get-user-data-by-email/<token>/<email>', methods='GET')
+@app.route('/get-user-data-by-email/<token>/<email>', methods=['GET'])
 def get_user_data_by_email(token, email):
     if helper.is_signed_in(token):
         if helper.user_exists(email):
@@ -80,13 +85,13 @@ def get_user_data_by_email(token, email):
         return jsonify({"success": False, "message": "You are not signed in."})
 
 
-@app.route('/get-user-messages-by-token/<token>', methods='GET')
+@app.route('/get-user-messages-by-token/<token>', methods=['GET'])
 def get_user_messages_by_token(token):
     email = helper.token_to_email(token)
     get_user_messages_by_email(email)
 
 
-@app.route('/get-user-messages-by-email/<token>/<email>', methods='GET')
+@app.route('/get-user-messages-by-email/<token>/<email>', methods=['GET'])
 def get_user_messages_by_email(token, email):
     if helper.is_signed_in(token):
         if helper.user_exists(email):
@@ -98,7 +103,7 @@ def get_user_messages_by_email(token, email):
         return jsonify({"success": False, "message": "You are not signed in."})
 
 
-@app.route('/post-message/<token>', methods='POST')
+@app.route('/post-message/<token>', methods=['POST'])
 def post_message(token):
     writer = helper.token_to_email(token)
     message = request.form['content']
