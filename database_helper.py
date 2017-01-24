@@ -4,6 +4,8 @@ from flask import g
 from server import app
 DATABASE = 'database.db'
 
+logged_in_users = {}
+
 
 def init_db():
     with app.app_context():
@@ -25,6 +27,22 @@ def query_db(query, args=(), one=False):
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
+
+
+def sign_in(token, email):
+    logged_in_users[token] = email
+
+
+def is_signed_in(token):
+    return token in logged_in_users
+
+
+def sign_out(token):
+    del logged_in_users[token]
+
+
+def token_to_email(token):
+    return logged_in_users[token]
 
 
 def valid_login(email, password):

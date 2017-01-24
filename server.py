@@ -12,7 +12,7 @@ def sign_in():
     token = str(uuid.uuid4())
 
     if helper.valid_login(email, password):
-        # TODO: Store logged in users?
+        helper.sign_in(token, email)
         return jsonify({"success": True, "message": "Successfully signed in.", "data": token})
     else:
         return jsonify({"success": False, "message": "Wrong username or password."})
@@ -98,12 +98,15 @@ def get_user_messages_by_email(token, email):
         return jsonify({"success": False, "message": "You are not signed in."})
 
 
-@app.route('/post-message/<token>/<email>', methods='POST')
-def post_message(token, message, email):
+@app.route('/post-message/<token>', methods='POST')
+def post_message(token):
     writer = helper.token_to_email(token)
+    message = request.form['content']
+    receiver = request.form['email']
+
     if helper.is_signed_in(token):
-        if helper.user_exists(email):
-            helper.add_message(message, writer, email)
+        if helper.user_exists(receiver):
+            helper.add_message(message, writer, receiver)
             return jsonify({"success": True, "message": "Message posted"})
         else:
             return jsonify({"success": False, "message": "No such user."})
