@@ -112,6 +112,7 @@ signInHandler = function(){
         console.log("Login success");
         var profile_view = document.getElementById("profile_view");
         localStorage.setItem("token", response.data);
+        openTab("Home");
         displayView();
     }else{
         console.log("Login failed.");
@@ -126,6 +127,7 @@ signOut = function(){
     var token = localStorage.getItem("token");
     var response = serverstub.signOut(token);
     localStorage.removeItem("token");
+    displayView();
 };
 
 // Function for showing messages from the system
