@@ -1,6 +1,8 @@
 import sqlite3
 from flask import g
 
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from server import app
 DATABASE = 'database.db'
 
@@ -46,17 +48,20 @@ def token_to_email(token):
 
 
 def valid_login(email, password):
-    return query_db('select * from users where email=? and password=?', [email, password])
-
+    if user_exists(email):
+        pw_hash = query_db('select password from users where email=?', [email])[0][0].encode('ascii')
+        return check_password_hash(pw_hash, password)
+    
 
 def user_exists(email):
     return query_db('select * from users where email=?', [email])
 
 
 def add_user(email, password, firstname, familyname, gender, city, country):
+    pw_hash = generate_password_hash(password)
     query_db('insert into users(email, password, firstname, familyname, gender, city, country) ' +
              'values(?, ?, ?, ?, ?, ?, ?)',
-             [email, password, firstname, familyname, gender, city, country])
+             [email, pw_hash, firstname, familyname, gender, city, country])
     get_db().commit()
 
 
@@ -75,7 +80,8 @@ def get_user_messages(email):
 
 
 def change_password(email, password):
-    query_db('update users set password=? where email=?', [password, email])
+    pw_hash = generate_password_hash(password)
+    query_db('update users set password=? where email=?', [pw_hash, email])
     get_db().commit()
 
 
