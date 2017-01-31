@@ -6,8 +6,9 @@ import uuid
 
 
 @app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def init():
+    helper.add_user('test@test.com', 'password', 'test', 'tester', 'male', 'testholm', 'testland')
+    return "Added user"
 
 
 @app.route('/sign-in', methods=['POST'])
@@ -42,7 +43,6 @@ def sign_up():
 
 @app.route('/sign-out', methods=['POST'])
 def sign_out(token):
-    # How do we know which people are logged in? Global variable list?
     if helper.is_signed_in(token):
         helper.sign_out(token)
         return jsonify({"success": True, "message": "Successfully signed out."})
@@ -55,7 +55,6 @@ def change_password(token):
     old_password = request.form['old_password']
     new_password = request.form['new_password']
     email = helper.token_to_email(token)
-    # TODO: Link token to email? validation through SQL or Dictionary
 
     if helper.is_signed_in(token):
         if helper.valid_login(email, old_password):
@@ -69,8 +68,11 @@ def change_password(token):
 
 @app.route('/get-user-data-by-token/<token>', methods=['GET'])
 def get_user_data_by_token(token):
-    email = helper.token_to_email(token)
-    get_user_data_by_email(email)
+    try:
+        email = helper.token_to_email(token)
+        return get_user_data_by_email(token, email)
+    except KeyError:
+        return jsonify({"success": False, "message": "No such token."})
 
 
 @app.route('/get-user-data-by-email/<token>/<email>', methods=['GET'])
@@ -87,8 +89,11 @@ def get_user_data_by_email(token, email):
 
 @app.route('/get-user-messages-by-token/<token>', methods=['GET'])
 def get_user_messages_by_token(token):
-    email = helper.token_to_email(token)
-    get_user_messages_by_email(email)
+    try:
+        email = helper.token_to_email(token)
+        return get_user_messages_by_email(token, email)
+    except KeyError:
+        return jsonify({"success": False, "message": "No such token."})
 
 
 @app.route('/get-user-messages-by-email/<token>/<email>', methods=['GET'])

@@ -51,7 +51,7 @@ def valid_login(email, password):
     if user_exists(email):
         pw_hash = query_db('select password from users where email=?', [email])[0][0].encode('ascii')
         return check_password_hash(pw_hash, password)
-    
+
 
 def user_exists(email):
     return query_db('select * from users where email=?', [email])
