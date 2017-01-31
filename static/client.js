@@ -103,21 +103,23 @@ signUpHandler = function(){
 
 // Function for handling sign ins
 signInHandler = function(){
-
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-    var response = serverstub.signIn(email, password);
+    var vars = "email" + email + "&password" + password;
 
-    if (response.success){
-        console.log("Login success");
-        var profile_view = document.getElementById("profile_view");
-        localStorage.setItem("token", response.data);
-        openTab("Home");
-        displayView();
-    }else{
-        console.log("Login failed.");
-        showSysMessage(response.message);
-    }
+    httpPost("/sign-in", vars, function(response)
+    {
+        if (response.success) {
+            console.log("Login success");
+            var profile_view = document.getElementById("profile_view");
+            localStorage.setItem("token", response.data);
+            openTab("Home");
+            displayView();
+        } else {
+            console.log("Login failed.");
+            showSysMessage(response.message);
+        }
+    });
 
     return false;
 };
@@ -199,7 +201,7 @@ browseFriend = function(){
         var messages = serverstub.getUserMessagesByEmail(token, email).data;
         console.log(messages);
         var output = "";
-        for( var i = 0; i < messages.length; i++){
+        for(var i = 0; i < messages.length; i++){
             output += "<hr><p>" + messages[i].content + "</p>";
         }
         document.getElementById("friend-wall").innerHTML = output;
@@ -240,4 +242,27 @@ openTab = function(tab){
         default:
             break;
     }
+};
+
+
+// HTTP requests for GET and POST 
+httpGet = function httpGet(url, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(JSON.parse(xmlHttp.responseText));
+    };
+    xmlHttp.open("GET", url, true);
+    xmlHttp.send();
+};
+
+httpPost = function httpPost(url, vars, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(JSON.parse(xmlHttp.responseText));
+    };
+    xmlHttp.open("POST", url);
+    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlHttp.send(vars);
 };
