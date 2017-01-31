@@ -54,7 +54,11 @@ def sign_out(token):
 def change_password(token):
     old_password = request.form['old_password']
     new_password = request.form['new_password']
-    email = helper.token_to_email(token)
+
+    try:
+        email = helper.token_to_email(token)
+    except KeyError:
+        return jsonify({"success": False, "message": "No such token."})
 
     if helper.is_signed_in(token):
         if helper.valid_login(email, old_password):
@@ -110,9 +114,13 @@ def get_user_messages_by_email(token, email):
 
 @app.route('/post-message/<token>', methods=['POST'])
 def post_message(token):
-    writer = helper.token_to_email(token)
     message = request.form['content']
     receiver = request.form['email']
+
+    try:
+        writer = helper.token_to_email(token)
+    except KeyError:
+        return jsonify({"success": False, "message": "No such token."})
 
     if helper.is_signed_in(token):
         if helper.user_exists(receiver):
