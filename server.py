@@ -1,13 +1,17 @@
-from flask import Flask, request, jsonify, redirect
-app = Flask(__name__)
+from flask import Flask, request, jsonify
+app = Flask(__name__, static_url_path='/static')
 
 import database_helper as helper
 import uuid
 
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
 
 @app.route('/')
 def index():
-    return redirect('static/client.html')
+    return app.send_static_file('client.html')
 
 
 @app.route('/sign-in', methods=['POST'])

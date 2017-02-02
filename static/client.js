@@ -103,9 +103,11 @@ signUpHandler = function(){
 
 // Function for handling sign ins
 signInHandler = function(){
+    console.log("Hello World!");
+
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-    var vars = "email" + email + "&password" + password;
+    var vars = "email=" + email + "&password=" + password;
 
     httpPost("/sign-in", vars, function(response)
     {
