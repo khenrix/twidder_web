@@ -1,12 +1,8 @@
 from flask import Flask, request, jsonify
-app = Flask(__name__, static_url_path='/static')
+app = Flask(__name__,static_url_path="")
 
 import database_helper as helper
 import uuid
-
-import sys
-reload(sys)
-sys.setdefaultencoding("utf-8")
 
 
 @app.route('/')
@@ -29,8 +25,8 @@ def sign_in():
 
 @app.route('/sign-up', methods=['POST'])
 def sign_up():
-    email = request.form['email']
-    password = request.form['password']
+    email = request.form['email_reg']
+    password = request.form['password_reg']
     firstname = request.form['firstname']
     familyname = request.form['familyname']
     gender = request.form['gender']

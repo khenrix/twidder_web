@@ -83,19 +83,23 @@ signUpHandler = function(){
         return false;
     }
 
-    var signUpObject = {email:email, password:pw_reg,
+    /*var signUpObject = {email:email, password:pw_reg,
         firstname:first_name, familyname:family_name,
-        gender:gender, city:city, country:country};
+        gender:gender, city:city, country:country};*/
 
-    var response = serverstub.signUp(signUpObject);
+    var vars = "email_reg=" + email + "&password_reg=" + pw_reg +
+        "&firstname=" + first_name + "&familyname=" + family_name +
+        "&gender=" + gender + "&city=" + city + "&country=" + country;
 
-    if (response.success){
-        console.log("Sign up successful!");
-    }else{
-        console.log("Sign up unsuccessful!");
-    }
+    httpPost("/sign-up", vars, function(response){
+        if (response.success){
+            console.log("Sign up successful!");
+        }else{
+            console.log("Sign up unsuccessful!");
+        }
 
-    showSysMessage(response.message);
+        showSysMessage(response.message);
+    });
 
     return false;
 
