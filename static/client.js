@@ -51,13 +51,19 @@ changePassword = function(){
 getUserData = function(){
 
     var token = localStorage.getItem("token");
-    return serverstub.getUserDataByToken(token).data;
+    var url = "/get-user-data-by-token/" + token;
+
+    httpGet(url, function(response){
+        return response.data;
+    });
 };
 
 // Shows user content under Home
 setUserContent = function(){
 
     data = getUserData();
+
+    console.log(data);
 
     document.getElementById("personal-content").innerHTML = "First name: " + data.firstname + "<br>";
     document.getElementById("personal-content").innerHTML += "Family name: " + data.familyname + "<br>";
@@ -173,47 +179,53 @@ postOnFriendsWall = function(){
 // Show personal wall messages
 showMessages = function(){
     var token = localStorage.getItem("token");
-    var messages = serverstub.getUserMessagesByToken(token).data;
+    url = "/get-user-messages-by-token/" + token;
 
-    var output = "";
-    for(var i = 0; i < messages.length; i++){
-        output += "<hr><p>" + messages[i].content + "</p>";
-    }
-    console.log(output);
-
-    document.getElementById("personal-wall").innerHTML = output;
-};
-
-// Browse friend
-browseFriend = function(){
-    var token = localStorage.getItem("token");
-    var email = document.getElementById("email_search").value;
-    var response = serverstub.getUserDataByEmail(token, email);
-    console.log(response);
-
-    if (response.success){
-        console.log("Friend found!");
-
-        // Show personal content
-        var data = response.data;
-        document.getElementById("friend-personal-content").innerHTML = "First name: " + data.firstname + "<br>";
-        document.getElementById("friend-personal-content").innerHTML += "Family name: " + data.familyname + "<br>";
-        document.getElementById("friend-personal-content").innerHTML += "Gender: " + data.gender + "<br>";
-        document.getElementById("friend-personal-content").innerHTML += "City: " + data.city + "<br>";
-        document.getElementById("friend-personal-content").innerHTML += "Country: " + data.country + "<br>";
-        document.getElementById("friend-personal-content").innerHTML += "Email: " + data.email + "<br>";
-
-        // Show messages
-        var messages = serverstub.getUserMessagesByEmail(token, email).data;
-        console.log(messages);
+    httpGet(url, function(response){
+        var messages = response.data;
         var output = "";
+
         for(var i = 0; i < messages.length; i++){
             output += "<hr><p>" + messages[i].content + "</p>";
         }
-        document.getElementById("friend-wall").innerHTML = output;
-    }else{
-        showSysMessage(response.message);
-    }
+
+        document.getElementById("personal-wall").innerHTML = output;
+    });
+};
+
+// Browse friend
+browseFriend = function () {
+    var token = localStorage.getItem("token");
+    var email = document.getElementById("email_search").value;
+    usrUrl = "/get-user-data-by-email/" + token + email;
+
+    httpGet(usrUrl, function (usrResponse) {
+        if (usrResponse.success) {
+            console.log("Friend found!");
+
+            // Show personal content
+            var data = response.data;
+            document.getElementById("friend-personal-content").innerHTML = "First name: " + data.firstname + "<br>";
+            document.getElementById("friend-personal-content").innerHTML += "Family name: " + data.familyname + "<br>";
+            document.getElementById("friend-personal-content").innerHTML += "Gender: " + data.gender + "<br>";
+            document.getElementById("friend-personal-content").innerHTML += "City: " + data.city + "<br>";
+            document.getElementById("friend-personal-content").innerHTML += "Country: " + data.country + "<br>";
+            document.getElementById("friend-personal-content").innerHTML += "Email: " + data.email + "<br>";
+
+            // Show messages
+            msgUrl = "/get-user-messages-by-email/ + token";
+            httpGet(msgUrl, function (msgResponse) {
+                var messages = msgResponse.data;
+                var output = "";
+                for (var i = 0; i < messages.length; i++) {
+                    output += "<hr><p>" + messages[i].content + "</p>";
+                }
+                document.getElementById("friend-wall").innerHTML = output;
+            });
+        } else {
+            showSysMessage(response.message);
+        }
+    });
 };
 
 // Display correct tab

@@ -4,6 +4,9 @@ app = Flask(__name__,static_url_path="")
 import database_helper as helper
 import uuid
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 @app.route('/')
 def index():
