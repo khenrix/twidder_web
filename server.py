@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect
 app = Flask(__name__)
 
 import database_helper as helper
@@ -6,9 +6,8 @@ import uuid
 
 
 @app.route('/')
-def init():
-    helper.add_user('test@test.com', 'password', 'test', 'tester', 'male', 'testholm', 'testland')
-    return "Added user"
+def index():
+    return redirect('static/client.html')
 
 
 @app.route('/sign-in', methods=['POST'])
