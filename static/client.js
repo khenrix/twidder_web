@@ -34,16 +34,18 @@ checkPassword = function(given_pw, given_pw_rep){
 
 // Function for changing the password
 changePassword = function(){
-
     var old_password = document.getElementById("psw_old").value;
     var new_password = document.getElementById("psw_new").value;
     var new_password_rep = document.getElementById("psw_new_rep").value;
 
     if (checkPassword(new_password, new_password_rep)){
         var token = localStorage.getItem("token");
-        var response = serverstub.changePassword(token, old_password, new_password);
-        showSysMessage(response.message);
-        console.log(response.message);
+        var url = "/change-password/" + token;
+        var vars = "old_password=" + old_password + "&new_password=" + new_password;
+        httpPost(url, vars, function(response){
+            showSysMessage(response.message);
+            console.log(response.message);
+        });
     }
 };
 

@@ -43,7 +43,7 @@ def sign_up():
         return jsonify({"success": True, "message": "Successfully created a new user."})
 
 
-@app.route('/sign-out', methods=['POST'])
+@app.route('/sign-out/<token>', methods=['POST'])
 def sign_out(token):
     if helper.is_signed_in(token):
         helper.sign_out(token)
@@ -52,7 +52,7 @@ def sign_out(token):
         return jsonify({"success": False, "message": "You are not signed in."})
 
 
-@app.route('/change-password', methods=['POST'])
+@app.route('/change-password/<token>', methods=['POST'])
 def change_password(token):
     old_password = request.form['old_password']
     new_password = request.form['new_password']
