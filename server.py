@@ -8,6 +8,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+
 @app.route('/')
 def index():
     return app.send_static_file('client.html')

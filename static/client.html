@@ -2,7 +2,6 @@
 <head>
     <link href="client.css" type="text/css" rel="stylesheet">
     <script src="client.js" type="text/javascript"></script>
-    <script src="serverstub.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -105,7 +104,7 @@
                 <div id="post-wall">
                     <h3>Post something on your wall</h3>
                     <div class="input-field">
-                        <textarea id="pm" rows="4" cols="50"></textarea>
+                        <textarea id="pm" name="content" rows="4" cols="50"></textarea>
                     </div>
                     <input type="submit" value="Post" onclick="postOnOwnWall()">
                 </div>
@@ -121,7 +120,7 @@
                     <h3>Search for a friend</h3>
                     <div class="input-field">
                         <label for="email_search">Email</label>
-                        <input id="email_search" type="email" name="email_search" value="" required>
+                        <input id="email_search" type="email" name="email" value="" required>
                     </div>
                     <div class="">
                         <input type="submit" value="Search" onclick="browseFriend()">
@@ -135,7 +134,7 @@
                         <h3>Post something on your friends wall</h3>
                         <div id="friend-post-wall">
                             <div class="input-field">
-                                <textarea id="friend_pm" rows="4" cols="50"></textarea>
+                                <textarea id="friend_pm" name="content" rows="4" cols="50"></textarea>
                             </div>
                             <input type="submit" value="Post" onclick="postOnFriendsWall()">
                         </div>
@@ -148,21 +147,23 @@
             </div>
             <div id="account-content" class="account-content text-center">
                     <h3>Change password</h3>
-                    <div class="input-field">
-                        <label for="psw_old">Old password</label>
-                        <input id="psw_old" type="password" name="old_password" value="" required>
-                    </div>
-                    <div class="input-field">
-                        <label for="psw_new">Password</label>
-                        <input id="psw_new"type="password" name="new_password" value="" required>
-                    </div>
-                    <div class="input-field">
-                        <label for="psw_new_rep">Repeat PSW</label>
-                        <input id="psw_new_rep" type="password" name="psw_reg_new" value="" required>
-                    </div>
-                    <div class="">
-                        <input type="submit" value="Confirm" onclick="changePassword()">
-                    </div>
+                    <form onsubmit="return changePassword()">
+                        <div class="input-field">
+                            <label for="psw_old">Old password</label>
+                            <input id="psw_old" type="password" name="old_password" value="" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="psw_new">Password</label>
+                            <input id="psw_new"type="password" name="new_password" value="" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="psw_new_rep">Repeat PSW</label>
+                            <input id="psw_new_rep" type="password" name="psw_reg_new" value="" required>
+                        </div>
+                        <div class="">
+                            <input type="submit" value="Confirm">
+                        </div>
+                    </form>
                     <hr>
                     <div>
                         <button class="button btn-sign-out" onclick="signOut()">Sign out</button>

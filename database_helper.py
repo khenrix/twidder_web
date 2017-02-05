@@ -66,7 +66,8 @@ def add_user(email, password, firstname, familyname, gender, city, country):
 
 
 def get_user_data(email):
-    return query_db('select * from users where email=?', [email])
+    data = query_db('select email, firstname, familyname, gender, city, country from users where email=?', [email])[0]
+    return {"email": data[0], "firstname": data[1], "familyname": data[2], "gender": data[3], "city": data[4], "country": data[5]}
 
 
 def add_message(content, writer, receiver):

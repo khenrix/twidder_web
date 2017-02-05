@@ -1,18 +1,18 @@
-displayView = function(){
+displayView = function () {
     // the code required to display a view
     if (localStorage.getItem("token") != null) {
         console.log("Showing profile view");
         var profile_view = document.getElementById("profile_view");
         document.getElementById("content").innerHTML = profile_view.innerHTML;
         openTab(localStorage.getItem("tab"));
-    }else{
+    } else {
         console.log("Showing welcome view");
         var welcome_view = document.getElementById("welcome_view");
         document.getElementById("content").innerHTML = welcome_view.innerHTML;
     }
 };
 
-window.onload = function(){
+window.onload = function () {
     //code that is executed as the page is loaded.
     //You shall put your own custom code here.
     //window.alert() is not allowed to be used in your implementation.
@@ -20,63 +20,55 @@ window.onload = function(){
 };
 
 // Function for checking if the new password is appropriate
-checkPassword = function(given_pw, given_pw_rep){
+checkPassword = function (given_pw, given_pw_rep) {
     var pw_length = 5;
     given_pw_length = given_pw.length;
 
-    if (given_pw === given_pw_rep && given_pw_length > pw_length){
+    if (given_pw === given_pw_rep && given_pw_length > pw_length) {
         return true;
-    }else{
+    } else {
         showSysMessage("Given passwords must be the same and longer than 5 characters!");
         return false;
     }
 };
 
 // Function for changing the password
-changePassword = function(){
+changePassword = function () {
     var old_password = document.getElementById("psw_old").value;
     var new_password = document.getElementById("psw_new").value;
     var new_password_rep = document.getElementById("psw_new_rep").value;
 
-    if (checkPassword(new_password, new_password_rep)){
+    if (checkPassword(new_password, new_password_rep)) {
         var token = localStorage.getItem("token");
         var url = "/change-password/" + token;
         var vars = "old_password=" + old_password + "&new_password=" + new_password;
-        httpPost(url, vars, function(response){
+        httpPost(url, vars, function (response) {
             showSysMessage(response.message);
             console.log(response.message);
         });
     }
+
+    return false;
 };
 
-// Retrieves user data
-getUserData = function(){
+// Shows user content under Home
+setUserContent = function () {
 
     var token = localStorage.getItem("token");
     var url = "/get-user-data-by-token/" + token;
 
-    httpGet(url, function(response){
-        return response.data;
+    httpGet(url, function (response) {
+        document.getElementById("personal-content").innerHTML = "First name: " + response.data.firstname + "<br>";
+        document.getElementById("personal-content").innerHTML += "Family name: " + response.data.familyname + "<br>";
+        document.getElementById("personal-content").innerHTML += "Gender: " + response.data.gender + "<br>";
+        document.getElementById("personal-content").innerHTML += "City: " + response.data.city + "<br>";
+        document.getElementById("personal-content").innerHTML += "Country: " + response.data.country + "<br>";
+        document.getElementById("personal-content").innerHTML += "Email: " + response.data.email + "<br>";
     });
 };
 
-// Shows user content under Home
-setUserContent = function(){
-
-    data = getUserData();
-
-    console.log(data);
-
-    document.getElementById("personal-content").innerHTML = "First name: " + data.firstname + "<br>";
-    document.getElementById("personal-content").innerHTML += "Family name: " + data.familyname + "<br>";
-    document.getElementById("personal-content").innerHTML += "Gender: " + data.gender + "<br>";
-    document.getElementById("personal-content").innerHTML += "City: " + data.city + "<br>";
-    document.getElementById("personal-content").innerHTML += "Country: " + data.country + "<br>";
-    document.getElementById("personal-content").innerHTML += "Email: " + data.email + "<br>";
-};
-
 // Function for handling sign ups
-signUpHandler = function(){
+signUpHandler = function () {
 
     var first_name = document.getElementById("first_name").value;
     var family_name = document.getElementById("family_name").value;
@@ -87,22 +79,22 @@ signUpHandler = function(){
     var pw_reg = document.getElementById("psw_reg").value;
     var pw_reg_rep = document.getElementById("psw_reg_rep").value;
 
-    if (!checkPassword(pw_reg, pw_reg_rep)){
+    if (!checkPassword(pw_reg, pw_reg_rep)) {
         return false;
     }
 
     /*var signUpObject = {email:email, password:pw_reg,
-        firstname:first_name, familyname:family_name,
-        gender:gender, city:city, country:country};*/
+     firstname:first_name, familyname:family_name,
+     gender:gender, city:city, country:country};*/
 
     var vars = "email_reg=" + email + "&password_reg=" + pw_reg +
         "&firstname=" + first_name + "&familyname=" + family_name +
         "&gender=" + gender + "&city=" + city + "&country=" + country;
 
-    httpPost("/sign-up", vars, function(response){
-        if (response.success){
+    httpPost("/sign-up", vars, function (response) {
+        if (response.success) {
             console.log("Sign up successful!");
-        }else{
+        } else {
             console.log("Sign up unsuccessful!");
         }
 
@@ -114,21 +106,18 @@ signUpHandler = function(){
 };
 
 // Function for handling sign ins
-signInHandler = function(){
-    console.log("Hello World!");
-
+signInHandler = function () {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     var vars = "email=" + email + "&password=" + password;
 
-    httpPost("/sign-in", vars, function(response)
-    {
+    httpPost("/sign-in", vars, function (response) {
         if (response.success) {
             console.log("Login success");
             var profile_view = document.getElementById("profile_view");
             localStorage.setItem("token", response.data);
-            openTab("Home");
             displayView();
+            openTab("Home");
         } else {
             console.log("Login failed.");
             showSysMessage(response.message);
@@ -139,39 +128,51 @@ signInHandler = function(){
 };
 
 // Function for signing out
-signOut = function(){
+signOut = function () {
     var token = localStorage.getItem("token");
-    var response = serverstub.signOut(token);
+    url = "/sign-out/" + token;
+    httpPost(url, null, function (response) {
+        console.log(response.message);
+    });
     localStorage.removeItem("token");
     displayView();
 };
 
 // Function for showing messages from the system
-showSysMessage = function(msg){
+showSysMessage = function (msg) {
     document.getElementById("error-message").innerHTML = msg;
     document.getElementById("alert-container").style.display = "block";
 };
 
 // Function for posting messages
-postMessage = function(msg, email){
+postMessage = function (msg, email) {
     var token = localStorage.getItem("token");
-
+    console.log(token);
     console.log("Posting wall message.");
-    var response = serverstub.postMessage(token, msg, email);
-    console.log(response.message);
+
+    var url = "/post-message/" + token;
+    var vars = "content=" + msg + "&email=" + email;
+    httpPost(url, vars, function (response) {
+        console.log(response.message);
+    });
 };
 
 // Post on own wall
-postOnOwnWall = function(){
-    var data = getUserData();
-    var email = data.email;
-    var msg = document.getElementById("pm").value;
+postOnOwnWall = function () {
+    var token = localStorage.getItem("token");
+    var url = "/get-user-data-by-token/" + token;
 
-    postMessage(msg, email);
+    httpGet(url, function (response) {
+        var data = response.data;
+        var email = data.email;
+        var msg = document.getElementById("pm").value;
+        postMessage(msg, email);
+    });
 };
 
+
 // Post on friends wall
-postOnFriendsWall = function(){
+postOnFriendsWall = function () {
     var email = document.getElementById("email_search").value;
     var msg = document.getElementById("friend_pm").value;
 
@@ -179,16 +180,16 @@ postOnFriendsWall = function(){
 };
 
 // Show personal wall messages
-showMessages = function(){
+showMessages = function () {
     var token = localStorage.getItem("token");
     url = "/get-user-messages-by-token/" + token;
 
-    httpGet(url, function(response){
+    httpGet(url, function (response) {
         var messages = response.data;
         var output = "";
 
-        for(var i = 0; i < messages.length; i++){
-            output += "<hr><p>" + messages[i].content + "</p>";
+        for (var i = 0; i < messages.length; i++) {
+            output += "<hr><p>" + messages[i][1] + "</p>";
         }
 
         document.getElementById("personal-wall").innerHTML = output;
@@ -199,14 +200,14 @@ showMessages = function(){
 browseFriend = function () {
     var token = localStorage.getItem("token");
     var email = document.getElementById("email_search").value;
-    usrUrl = "/get-user-data-by-email/" + token + email;
+    usrUrl = "/get-user-data-by-email/" + token + "/" + email;
 
     httpGet(usrUrl, function (usrResponse) {
         if (usrResponse.success) {
             console.log("Friend found!");
 
             // Show personal content
-            var data = response.data;
+            var data = usrResponse.data;
             document.getElementById("friend-personal-content").innerHTML = "First name: " + data.firstname + "<br>";
             document.getElementById("friend-personal-content").innerHTML += "Family name: " + data.familyname + "<br>";
             document.getElementById("friend-personal-content").innerHTML += "Gender: " + data.gender + "<br>";
@@ -215,25 +216,26 @@ browseFriend = function () {
             document.getElementById("friend-personal-content").innerHTML += "Email: " + data.email + "<br>";
 
             // Show messages
-            msgUrl = "/get-user-messages-by-email/ + token";
+            msgUrl = "/get-user-messages-by-email/" + token + "/" + email;
             httpGet(msgUrl, function (msgResponse) {
                 var messages = msgResponse.data;
+
                 var output = "";
                 for (var i = 0; i < messages.length; i++) {
-                    output += "<hr><p>" + messages[i].content + "</p>";
+                    output += "<hr><p>" + messages[i][1] + "</p>";
                 }
                 document.getElementById("friend-wall").innerHTML = output;
             });
         } else {
-            showSysMessage(response.message);
+            showSysMessage(usrResponse.message);
         }
     });
 };
 
 // Display correct tab
-openTab = function(tab){
+openTab = function (tab) {
     localStorage.setItem("tab", tab);
-    switch(tab) {
+    switch (tab) {
         case "Home":
             document.getElementById("home-content").style.display = "block";
             document.getElementById("browse-content").style.display = "none";
@@ -263,7 +265,6 @@ openTab = function(tab){
             break;
     }
 };
-
 
 // HTTP requests for GET and POST 
 httpGet = function httpGet(url, callback) {
