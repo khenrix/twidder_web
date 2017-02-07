@@ -30,6 +30,23 @@ def sign_in():
         return jsonify({"success": False, "message": "Wrong username or password."})
 
 
+
+
+while True:
+    if request.environ.get('wsgi.websocket'):
+        ws = request.environ['wsgi.websocket']
+        email =
+
+
+
+def socket_connection():
+    if request.environ.get('wsgi.websocket'):
+        ws = request.environ['wsgi.websocket']
+        email = ws.receive()
+        while True:
+
+
+
 @app.route('/sign-up', methods=['POST'])
 def sign_up():
     email = request.form['email_reg']
