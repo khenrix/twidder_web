@@ -138,13 +138,10 @@ def post_message(token):
         return jsonify({"success": False, "message": "You are not signed in."})
 
 
-@run_with_reloader
 def run_server():
     app.debug = True
     http_server = WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
     http_server.serve_forever()
 
-
 if __name__ == "__main__":
-
     run_server()
