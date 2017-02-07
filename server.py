@@ -1,5 +1,8 @@
+from geventwebsocket.handler import WebSocketHandler
+from gevent.wsgi import WSGIServer
 from flask import Flask, request, jsonify
-app = Flask(__name__,static_url_path="")
+
+app = Flask(__name__, static_url_path="")
 
 import database_helper as helper
 import uuid
@@ -133,3 +136,15 @@ def post_message(token):
             return jsonify({"success": False, "message": "No such user."})
     else:
         return jsonify({"success": False, "message": "You are not signed in."})
+
+
+@run_with_reloader
+def run_server():
+    app.debug = True
+    http_server = WSGIServer(('', 5000), app, handler_class=WebSocketHandler)
+    http_server.serve_forever()
+
+
+if __name__ == "__main__":
+
+    run_server()
