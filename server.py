@@ -30,23 +30,6 @@ def sign_in():
         return jsonify({"success": False, "message": "Wrong username or password."})
 
 
-
-
-while True:
-    if request.environ.get('wsgi.websocket'):
-        ws = request.environ['wsgi.websocket']
-        email =
-
-
-
-def socket_connection():
-    if request.environ.get('wsgi.websocket'):
-        ws = request.environ['wsgi.websocket']
-        email = ws.receive()
-        while True:
-
-
-
 @app.route('/sign-up', methods=['POST'])
 def sign_up():
     email = request.form['email_reg']
@@ -153,6 +136,22 @@ def post_message(token):
             return jsonify({"success": False, "message": "No such user."})
     else:
         return jsonify({"success": False, "message": "You are not signed in."})
+
+
+@app.route('/socket')
+def socket():
+    if request.environ.get('wsgi.websocket'):
+        ws = request.environ['wsgi.websocket']
+        while True:
+            client_response = ws.receive()
+            if client_response["action"] == 'sign_in':
+                if helper.is_signed_in(client_response["token"]):
+                    email = helper.token_to_email(client_response["token"])
+                    if helper.is_active(email):
+                        current_ws = helper.email_to_socket(email)
+                        server_response = jsonify({"success": True, "message": "sign_out"})
+                        current_ws.send(server_response)
+                    helper.add_session(email, ws)
 
 
 def run_server():

@@ -1,11 +1,3 @@
-var ws = new WebSocket("ws://http://127.0.0.1:5000/");
-
-ws.onmessage = function (response) {
-    if (response.logout) {
-        signOut();
-    }
-};
-
 displayView = function () {
     // the code required to display a view
     if (localStorage.getItem("token") != null) {
@@ -122,7 +114,14 @@ signInHandler = function () {
     httpPost("/sign-in", vars, function (response) {
         if (response.success) {
             console.log("Login success");
-            var profile_view = document.getElementById("profile_view");
+
+            // Socket data
+            var socketData = {};
+            socketData["action"] = "sign_in";
+            socketData["token"] = response.data;
+            socket(socketData);
+
+            // Store token and display correct view and tab
             localStorage.setItem("token", response.data);
             displayView();
             openTab("Home");
@@ -295,4 +294,27 @@ httpPost = function httpPost(url, vars, callback) {
     xmlHttp.open("POST", url);
     xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlHttp.send(vars);
+};
+
+// Socket function
+socket = function socket(data) {
+    var ws = new WebSocket("ws://localhost:5000/socket");
+
+    ws.onopen = function() {
+        ws.send(JSON.stringify(data));
+    };
+
+    ws.onmessage = function(serverResponse) {
+        var response = JSON.parse(serverResponse);
+
+        if (response.success){
+            if (response.message == "sign_out"){
+                signOut();
+            }
+        }
+    };
+
+    ws.onclose = function() {
+        // Web Socket is closed?
+    };
 };

@@ -98,3 +98,19 @@ def initdb_command():
     """Initializes the database."""
     init_db()
     print('Initialized the database.')
+
+
+# Socket helper functions (maybe we should create a seperate file for this. Overkill?
+session = {}
+
+
+def is_active(email):
+    return email in session
+
+
+def email_to_socket(email):
+    return session[email]
+
+
+def add_session(email, ws):
+    logged_in_users[email] = ws
