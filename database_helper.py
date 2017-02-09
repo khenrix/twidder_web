@@ -100,7 +100,7 @@ def initdb_command():
     print('Initialized the database.')
 
 
-# Socket helper functions (maybe we should create a seperate file for this. Overkill?
+# Socket helper functions (maybe we should create a separate file for this. Overkill?
 session = {}
 
 
@@ -113,4 +113,4 @@ def email_to_socket(email):
 
 
 def add_session(email, ws):
-    logged_in_users[email] = ws
+    session[email] = ws

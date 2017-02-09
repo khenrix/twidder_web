@@ -298,14 +298,14 @@ httpPost = function httpPost(url, vars, callback) {
 
 // Socket function
 socket = function socket(data) {
-    var ws = new WebSocket("ws://localhost:5000/socket");
+    var ws = new WebSocket("ws://127.0.0.1:5000/socket");
 
     ws.onopen = function() {
         ws.send(JSON.stringify(data));
     };
 
     ws.onmessage = function(serverResponse) {
-        var response = JSON.parse(serverResponse);
+        var response = JSON.parse(serverResponse.data);
 
         if (response.success){
             if (response.message == "sign_out"){

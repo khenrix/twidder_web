@@ -1,6 +1,6 @@
 from geventwebsocket.handler import WebSocketHandler
-from gevent.wsgi import WSGIServer
-from flask import Flask, request, jsonify
+from gevent.pywsgi import WSGIServer
+from flask import Flask, request, jsonify, json
 
 app = Flask(__name__, static_url_path="")
 
@@ -140,16 +140,18 @@ def post_message(token):
 
 @app.route('/socket')
 def socket():
+    print "Inside socket"
     if request.environ.get('wsgi.websocket'):
         ws = request.environ['wsgi.websocket']
         while True:
-            client_response = ws.receive()
+            client_response = json.loads(ws.receive())
+            print client_response["action"], client_response["token"]
             if client_response["action"] == 'sign_in':
                 if helper.is_signed_in(client_response["token"]):
                     email = helper.token_to_email(client_response["token"])
                     if helper.is_active(email):
                         current_ws = helper.email_to_socket(email)
-                        server_response = jsonify({"success": True, "message": "sign_out"})
+                        server_response = json.dumps({"success": True, "message": "sign_out"})
                         current_ws.send(server_response)
                     helper.add_session(email, ws)
 
