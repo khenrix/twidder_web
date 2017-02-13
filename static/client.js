@@ -272,6 +272,8 @@ openTab = function (tab) {
         default:
             break;
     }
+
+    return false;
 };
 
 // HTTP requests for GET and POST 
