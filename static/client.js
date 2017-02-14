@@ -197,9 +197,9 @@ showMessages = function () {
         var output = "";
 
         for (var i = 0; i < messages.length; i++) {
-            output += "<hr><p>" + messages[i][1] + "</p>";
+            output += "<hr><div id='holder_"+ i +"' ondrop='drop(event)' ondragover='allowDrop(event)' > <p id='msg_" + i + "' draggable='true' ondragstart='drag(event)'>" + messages[i][1] + "</p></div>";
         }
-
+        output += "<hr>";
         document.getElementById("personal-wall").innerHTML = output;
     });
 };
@@ -319,4 +319,22 @@ socket = function socket(data) {
     ws.onclose = function() {
         // Web Socket is closed?
     };
+};
+
+//Handle drag and drop events
+allowDrop = function allowDrop(ev) {
+    ev.preventDefault();
+};
+
+drag = function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+};
+
+drop = function drop(ev) {
+    ev.preventDefault();
+    var data = document.getElementById(ev.dataTransfer.getData("text"));
+    var parent_node = data.parentNode;
+    var temp = document.getElementById(ev.target.id);
+    parent_node.innerHTML = temp.parentNode.innerHTML;
+    ev.target.innerHTML = data.innerHTML;
 };
