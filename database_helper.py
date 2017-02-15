@@ -101,16 +101,16 @@ def initdb_command():
 
 
 # Socket helper functions (maybe we should create a separate file for this. Overkill?
-session = {}
+sessions = {}
 
 
 def is_active(email):
-    return email in session
+    return email in sessions
 
 
 def email_to_socket(email):
-    return session[email]
+    return sessions[email]
 
 
 def add_session(email, ws):
-    session[email] = ws
+    sessions[email] = ws
