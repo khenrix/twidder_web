@@ -83,10 +83,6 @@ signUpHandler = function () {
         return false;
     }
 
-    /*var signUpObject = {email:email, password:pw_reg,
-     firstname:first_name, familyname:family_name,
-     gender:gender, city:city, country:country};*/
-
     var vars = "email_reg=" + email + "&password_reg=" + pw_reg +
         "&firstname=" + first_name + "&familyname=" + family_name +
         "&gender=" + gender + "&city=" + city + "&country=" + country;
