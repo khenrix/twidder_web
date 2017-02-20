@@ -86,6 +86,11 @@ def change_password(email, password):
     get_db().commit()
 
 
+def get_gender_ratio():
+    nr_of_male_users = len(query_db('select email from users where gender=?', ['male']))
+    nr_of_female_users = len(query_db('select email from users where gender=?', ['female']))
+    return [nr_of_male_users, nr_of_female_users]
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
