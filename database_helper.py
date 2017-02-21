@@ -91,6 +91,18 @@ def get_gender_ratio():
     nr_of_female_users = len(query_db('select email from users where gender=?', ['female']))
     return [nr_of_male_users, nr_of_female_users]
 
+
+def get_message_ratio(writer):
+    nr_of_own_messages = len(query_db('select * from messages where writer=?', [writer]))
+    nr_of_all_messages = len(query_db('select * from messages'))
+    return [nr_of_own_messages, nr_of_all_messages]
+
+
+def get_session_ratio():
+    nr_of_logged_in_users = len(logged_in_users)
+    nr_of_registrated_users = len(query_db('select * from users'))
+    return [nr_of_logged_in_users, nr_of_registrated_users]
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
