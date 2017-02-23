@@ -25,7 +25,6 @@ def sign_in():
 
     if helper.valid_login(email, password):
         helper.sign_in(token, email)
-        update_live_stats()
         return jsonify({"success": True, "message": "Successfully signed in.", "data": token})
     else:
         return jsonify({"success": False, "message": "Wrong username or password."})
@@ -156,6 +155,7 @@ def socket():
                         server_response = json.dumps({"success": True, "message": "sign_out"})
                         current_ws.send(server_response)
                     helper.add_session(email, ws)
+                    update_live_stats()
 
 
 def update_live_stats():
@@ -169,7 +169,7 @@ def update_live_stats():
         }
         ws = helper.email_to_socket(email)
         ws.send(json.dumps(live_data))
-
+    
 
 def run_server():
     app.debug = True

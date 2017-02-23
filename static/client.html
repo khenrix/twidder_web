@@ -122,9 +122,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li id="home-tab" class="active"><a href="#" onclick="return openTab('Home')">Home <span class="sr-only">(current)</span></a></li>
-                <li id="browse-tab" ><a href="#" onclick="return openTab('Browse')">Browse</a></li>
-                <li id="account-tab"><a href="#" onclick="return openTab('Account')">Account</a></li>
+                <li id="home-tab" class="active"><a href="" onclick="return openTab('Home')">Home <span class="sr-only">(current)</span></a></li>
+                <li id="browse-tab" ><a href="" onclick="return openTab('Browse')">Browse</a></li>
+                <li id="account-tab"><a href="" onclick="return openTab('Account')">Account</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
             </ul>
@@ -143,7 +143,7 @@
                 <div id="personal-content"></div>
                 <hr>
                 <div class="container">
-                    <div class="col-lg-12 text-center">
+                    <div class="col-lg-12">
                         <h3>Live statistics</h3>
                         <div class="col-lg-4">
                             <h5>Sessions</h5>
@@ -169,7 +169,7 @@
                 <div id="post-wall">
                     <h3>Post something on your wall</h3>
                     <div class="input-field">
-                        <textarea id="pm" name="content" rows="4" cols="50"></textarea>
+                        <textarea id="pm" name="content" rows="4" cols="30"></textarea>
                     </div>
                     <input type="submit" value="Post" onclick="postOnOwnWall()">
                 </div>
@@ -196,7 +196,7 @@
                         <h3>Post something on your friends wall</h3>
                         <div id="friend-post-wall">
                             <div class="input-field">
-                                <textarea id="friend_pm" name="content" rows="4" cols="50"></textarea>
+                                <textarea id="friend_pm" name="content" rows="4" cols="30"></textarea>
                             </div>
                             <input type="submit" value="Post" onclick="postOnFriendsWall()">
                         </div>
