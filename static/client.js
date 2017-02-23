@@ -310,7 +310,7 @@ socket = function socket(data) {
                 signOut();
             } else if (response.message == "stats") {
                 // Send live data
-                update_charts(response.gender_ratio, response.message_ratio, response.session_ratio)
+                update_charts(response.gender_ratio, response.session_ratio, response.message_ratio)
             }
         }
     };
