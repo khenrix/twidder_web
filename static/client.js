@@ -308,6 +308,9 @@ socket = function socket(data) {
         if (response.success){
             if (response.message == "sign_out"){
                 signOut();
+            } else if (response.message == "stats") {
+                // Send live data
+                update_charts(response.gender_ratio, response.message_ratio, response.session_ratio)
             }
         }
     };

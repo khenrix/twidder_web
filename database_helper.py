@@ -100,8 +100,9 @@ def get_message_ratio(writer):
 
 def get_session_ratio():
     nr_of_logged_in_users = len(logged_in_users)
-    nr_of_registrated_users = len(query_db('select * from users'))
-    return [nr_of_logged_in_users, nr_of_registrated_users]
+    nr_of_registered_users = len(query_db('select * from users'))
+    return [nr_of_logged_in_users, nr_of_registered_users]
+
 
 @app.teardown_appcontext
 def close_connection(exception):

@@ -25,6 +25,7 @@ def sign_in():
 
     if helper.valid_login(email, password):
         helper.sign_in(token, email)
+        update_live_stats()
         return jsonify({"success": True, "message": "Successfully signed in.", "data": token})
     else:
         return jsonify({"success": False, "message": "Wrong username or password."})
@@ -44,6 +45,7 @@ def sign_up():
         return jsonify({"success": False, "message": "User already exists."})
     else:
         helper.add_user(email, password, firstname, familyname, gender, city, country)
+        update_live_stats()
         return jsonify({"success": True, "message": "Successfully created a new user."})
 
 
@@ -51,6 +53,7 @@ def sign_up():
 def sign_out(token):
     if helper.is_signed_in(token):
         helper.sign_out(token)
+        update_live_stats()
         return jsonify({"success": True, "message": "Successfully signed out."})
     else:
         return jsonify({"success": False, "message": "You are not signed in."})
@@ -131,6 +134,7 @@ def post_message(token):
     if helper.is_signed_in(token):
         if helper.user_exists(receiver):
             helper.add_message(message, writer, receiver)
+            update_live_stats()
             return jsonify({"success": True, "message": "Message posted"})
         else:
             return jsonify({"success": False, "message": "No such user."})
@@ -152,6 +156,19 @@ def socket():
                         server_response = json.dumps({"success": True, "message": "sign_out"})
                         current_ws.send(server_response)
                     helper.add_session(email, ws)
+
+
+def update_live_stats():
+    for email in helper.sessions:
+        live_data = {
+            'success': True,
+            'message': 'stats',
+            'gender_ratio': helper.get_gender_ratio(),
+            'message_ratio': helper.get_message_ratio(email),
+            'session_ratio': helper.get_session_ratio(),
+        }
+        ws = helper.email_to_socket(email)
+        ws.send(json.dumps(live_data))
 
 
 def run_server():
