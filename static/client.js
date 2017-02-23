@@ -58,12 +58,12 @@ setUserContent = function () {
     var url = "/get-user-data-by-token/" + token;
 
     httpGet(url, function (response) {
-        document.getElementById("personal-content").innerHTML = "First name: " + response.data.firstname + "<br>";
-        document.getElementById("personal-content").innerHTML += "Family name: " + response.data.familyname + "<br>";
-        document.getElementById("personal-content").innerHTML += "Gender: " + response.data.gender + "<br>";
-        document.getElementById("personal-content").innerHTML += "City: " + response.data.city + "<br>";
-        document.getElementById("personal-content").innerHTML += "Country: " + response.data.country + "<br>";
-        document.getElementById("personal-content").innerHTML += "Email: " + response.data.email + "<br>";
+        document.getElementById("personal-content").innerHTML = "<b>First name: </b>" + response.data.firstname + "<br>";
+        document.getElementById("personal-content").innerHTML += "<b>Family name: </b>" + response.data.familyname + "<br>";
+        document.getElementById("personal-content").innerHTML += "<b>Gender: </b>" + response.data.gender + "<br>";
+        document.getElementById("personal-content").innerHTML += "<b>City: </b>" + response.data.city + "<br>";
+        document.getElementById("personal-content").innerHTML += "<b>Country: </b>" + response.data.country + "<br>";
+        document.getElementById("personal-content").innerHTML += "<b>Email:</b> " + response.data.email + "<br>";
     });
 };
 
@@ -110,7 +110,7 @@ signInHandler = function () {
     httpPost("/sign-in", vars, function (response) {
         if (response.success) {
             console.log("Login success");
-
+            console.log(response.data);
             // Socket data
             var socketData = {};
             socketData["action"] = "sign_in";
@@ -244,26 +244,26 @@ openTab = function (tab) {
             document.getElementById("home-content").style.display = "block";
             document.getElementById("browse-content").style.display = "none";
             document.getElementById("account-content").style.display = "none";
-            document.getElementById("home-tab").style.background = "black";
-            document.getElementById("browse-tab").style.background = "none";
-            document.getElementById("account-tab").style.background = "none";
+            document.getElementById("home-tab").classList.add("active");
+            document.getElementById("browse-tab").classList.remove("active");
+            document.getElementById("account-tab").classList.remove("active");
             setUserContent();
             break;
         case "Browse":
             document.getElementById("home-content").style.display = "none";
             document.getElementById("browse-content").style.display = "block";
             document.getElementById("account-content").style.display = "none";
-            document.getElementById("home-tab").style.background = "none";
-            document.getElementById("browse-tab").style.background = "black";
-            document.getElementById("account-tab").style.background = "none";
+            document.getElementById("home-tab").classList.remove("active");
+            document.getElementById("browse-tab").classList.add("active");
+            document.getElementById("account-tab").classList.remove("active");
             break;
         case "Account":
             document.getElementById("home-content").style.display = "none";
             document.getElementById("browse-content").style.display = "none";
             document.getElementById("account-content").style.display = "block";
-            document.getElementById("home-tab").style.background = "none";
-            document.getElementById("browse-tab").style.background = "none";
-            document.getElementById("account-tab").style.background = "black";
+            document.getElementById("home-tab").classList.remove("active");
+            document.getElementById("browse-tab").classList.remove("active");
+            document.getElementById("account-tab").classList.add("active");
             break;
         default:
             break;
