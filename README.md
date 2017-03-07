@@ -6,9 +6,6 @@
 
 This single page web application (SPA) was created to learn some basic web programming techniques.  
 Be aware of some ugly code as this is the first 'real' web application I have worked on.  
-Ruben however had some more experience and by collaborating we achieved a quite decent result.  
-
-Big thanks to Ruben for helping me understand the basics and for collaborating with me on this project.
 
 ***
 
@@ -18,13 +15,14 @@ Big thanks to Ruben for helping me understand the basics and for collaborating w
 * Gevent 
 * Websockets
 * Python
-* SQL
+* SQLite3
 
 ### Frontend
 
 * HTML
 * JavaScript
 * CSS
+* Websockets
 
 ### Features
 
