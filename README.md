@@ -1,8 +1,6 @@
 # Twidder  
 
-***
-
-## A simple social-networking web application for learning purposes
+### A simple social-networking web application for learning purposes
 
 This single page web application (SPA) was created to learn some basic web programming techniques.  
 Be aware of some ugly code as this is the first 'real' web application I have worked on.  
